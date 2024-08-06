@@ -1,0 +1,53 @@
+server :
+  port : 9999
+spring:
+  application:
+    name: scheduledTaskserver
+#  kafka:
+
+
+  kafka:
+    properties:
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username= 'NCN7G5ANA2JESSUM' password='opkuSxpv0UA+gZgiuNEMtJDxwh5YpVHnfbGjDcmoZA78aWB5tfyZGZWjM9k6IbZe';
+      security:
+        protocol: SASL_SSL
+      session:
+        timeout:
+          ms: 45000
+    bootstrap-servers: pkc-4j8dq.southeastasia.azure.confluent.cloud:9092
+
+  datasource:
+    primary:
+      url: jdbc:mysql://t4-back-rds.cbociiqm6c4x.ap-northeast-2.rds.amazonaws.com:3306/productservice
+      username: admin
+      password: dusdldma4!
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+    secondary:
+      url: jdbc:mysql://t4-back-rds.cbociiqm6c4x.ap-northeast-2.rds.amazonaws.com:3306/orderservice
+      username: admin
+      password: dusdldma4!
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+  jpa:
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: false
+          use_query_cache: false
+    hibernate:
+      ddl-auto: none
+    show-sql : true
+eureka :
+  instance :
+    preferIpAddress: true
+    ipAddress : ${ecs-instance-ip-address:127.0.0.1}
+  client :
+    registerWithEureka : true
+    fetchRegistry : true
+    serviceUrl :
+      defaultZone : http://54.180.108.102:8070/eureka/ # eureka 서버 주소
